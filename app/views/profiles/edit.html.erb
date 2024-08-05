@@ -1,0 +1,28 @@
+<h2>Редактировать профиль</h2>
+
+<%= form_for(@profile, url: profile_path(@profile), method: :patch) do |f| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "ошибка") %> запрещают сохранение профиля:</h2>
+      <ul>
+        <% @profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+  </div>
+
+    <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Сохранить" %>
+  </div>
+<% end %>

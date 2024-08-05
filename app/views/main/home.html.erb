@@ -1,0 +1,14 @@
+<h1>Welcome to SocialSaw</h1>
+<% if user_signed_in? %>
+    <% if current_user.profile %>
+    <span>Здравствуйте, <%= current_user.profile.username %></span>
+  <%= link_to 'ИЗменить юзернейм', edit_profile_path(current_user.profile) %>
+<% else %>
+<span>Здравствуйте, <%= current_user.email %></span>
+  <%= link_to 'Создать профиль', new_profile_path %> <!-- или любая другая логика для создания профиля -->
+<% end %>
+
+    <%= link_to 'Выйти', destroy_user_session_path,  data: { turbo_method: :delete } %>
+<% else %>
+    <%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %>
+<% end %>
