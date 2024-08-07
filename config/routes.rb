@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users
-  
-  resources :profiles
+  resources :posts
+  resources :profiles do
+    resources :posts
+    member do
+      get 'my_posts'
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

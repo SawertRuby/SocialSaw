@@ -1,26 +1,23 @@
-<% if user_signed_in? %>
-    <% if current_user.profile %>
-    <span>Здравствуйте, <%= current_user.profile.username %></span>
-    <% if current_user.profile.avatar.attached? %>
+<h1><%= @profile.user.email %>'s Profile</h1>
+
+<% if current_user.profile.avatar.attached? %>
     <%= image_tag(current_user.profile.avatar) %>
   <% else %>
     <span>Нет аватара</span>
   <% end %>
-  <%= link_to 'ИЗменить юзернейм', edit_profile_path(current_user.profile) %>
-  <%= link_to 'Создать пост', new_post_path  %> <!-- или любая другая логика для создания профиля -->
-<h2>My Posts</h2>
+
+<h2>Posts</h2>
 <% @posts.each do |post| %>
-  <div>
-    <h3><%= link_to post.description, post %></h3>
-    <% post.images.each do |image| %>
-      <%= image_tag image %>
+  <div class="post">
+    <h3><%= post.description %></h3>
+    <% if post.images.attached? %>
+      <% post.images.each do |image| %>
+        <%= image_tag image %>
+      <% end %>
     <% end %>
   </div>
 <% end %>
-<% else %>
-<span>Здравствуйте, <%= current_user.email %></span>
-  <%= link_to 'Создать профиль', new_profile_path %> <!-- или любая другая логика для создания профиля -->
-<% end %>
 
-   
+<% if @profile.user == current_user %>
+  <%= link_to 'Edit Profile', edit_profile_path(@profile) %>
 <% end %>
