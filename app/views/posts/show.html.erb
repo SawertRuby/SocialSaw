@@ -1,0 +1,7 @@
+<h1><%= @post.description %></h1>
+
+<% @post.images.each do |image| %>
+  <div>
+    <%= image_tag image %>
+  </div>
+<% end %>

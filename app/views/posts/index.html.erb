@@ -1,0 +1,11 @@
+<h1>All Posts</h1>
+
+<% @posts.each do |post| %>
+  <div>
+   <h3><%= link_to post.profile.username, profile_path(post.profile) %></h3>
+    <h3><%= link_to post.description, post %></h3>
+    <% post.images.each do |image| %>
+      <%= image_tag image %>
+    <% end %>
+  </div>
+<% end %>
