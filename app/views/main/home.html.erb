@@ -2,6 +2,7 @@
 <% if user_signed_in? %>
     <% if current_user.profile %>
     <span>Здравствуйте, <%= current_user.profile.username %></span>
+    <%= image_tag(current_user.profile.avatar) %>
   <%= link_to 'ИЗменить юзернейм', edit_profile_path(current_user.profile) %>
 <% else %>
 <span>Здравствуйте, <%= current_user.email %></span>
