@@ -5,6 +5,7 @@ Rails.application.routes.draw do
  end
   resources :posts
   resources :profiles do
+    resource :followers
     resources :posts
     member do
       get 'my_posts'
