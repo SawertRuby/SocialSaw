@@ -6,7 +6,28 @@
     <span>Нет аватара</span>
   <% end %>
 
-<h2>Posts</h2>
+<% if @profile.user == current_user %>
+  <%= link_to 'Изменить профиль', edit_profile_path(@profile) %>
+<% end %>
+
+
+<% if user_signed_in? && current_user.profile != @profile %>
+  <% if current_user.profile.following.include?(@profile) %>
+    <%= button_to 'Отписаться', profile_followers_path(@profile), method: :delete, class: 'btn btn-secondary' %>
+  <% else %>
+    <%= button_to 'Подписаться', profile_followers_path(@profile), method: :post, class: 'btn btn-primary' %>
+  <% end %>
+<% end %>
+
+<% if user_signed_in? %>
+  <%= link_to "Подписчики  #{ @profile.followers.count}" , profile_followers_path(@profile) %>
+<% end %>
+<% if user_signed_in? %>
+  <%= link_to "Подписки  #{ @profile.following.count}" , profile_followers_path(@profile) %>
+<% end %>
+
+
+<h2>Посты</h2>
 <% @posts.each do |post| %>
   <div class="post">
     <h3><%= post.description %></h3>
@@ -18,6 +39,3 @@
   </div>
 <% end %>
 
-<% if @profile.user == current_user %>
-  <%= link_to 'Edit Profile', edit_profile_path(@profile) %>
-<% end %>

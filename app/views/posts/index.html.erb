@@ -1,6 +1,6 @@
-<h1>All Posts</h1>
+<h1>Общая лента</h1>
 
-<% @posts.each do |post| %>
+<% @posts.reverse.each do |post| %>
   <div>
    <h3><%= link_to post.profile.username, profile_path(post.profile) %></h3>
     <h3><%= link_to post.description, post %></h3>
