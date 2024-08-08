@@ -1,0 +1,13 @@
+<h3><%= link_to @post.profile.username, profile_path(@post.profile) %></h3>
+<h1><%= @post.description %></h1>
+
+<% @post.images.each do |image| %>
+  <div>
+    <%= image_tag image %>
+  </div>
+<% end %>
+
+<% @comments.each do |comment| %>
+  <div>
+    <%= comment %>
+  </div>

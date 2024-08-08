@@ -1,5 +1,5 @@
-<h1><%= @profile.user.email %>'s Profile</h1>
-
+<h1><%= @profile.username%></h1>
+<h4><%= @profile.user.email %></h4>
 <% if current_user.profile.avatar.attached? %>
     <%= image_tag(current_user.profile.avatar) %>
   <% else %>
@@ -30,6 +30,7 @@
 <h2>Посты</h2>
 <% @posts.each do |post| %>
   <div class="post">
+  <%= link_to @profile.username, post %>
     <h3><%= post.description %></h3>
     <% if post.images.attached? %>
       <% post.images.each do |image| %>
