@@ -18,4 +18,8 @@
     <%= link_to 'Выйти', destroy_user_session_path,  data: { turbo_method: :delete } %>
 <% else %>
     <%= link_to 'Войти', new_user_session_path %> или <%= link_to 'Зарегистрироваться', new_user_registration_path %>
+  <% redirect_to post_path%>
 <% end %>
+<script type="text/javascript">
+  window.location.href = "<%= posts_path %>";
+</script>
