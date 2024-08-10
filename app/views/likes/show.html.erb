@@ -1,0 +1,10 @@
+<h2>Подписчики</h2>
+<ul>
+    <% if @post.likes.count == 0 %>
+        <p>Нет лайков</p>
+    <%else%>
+        <% @post.profiles.each do |profile| %>
+            <li><%= link_to profile.username, profile %></li>
+        <% end %>
+    <% end %>
+</ul>

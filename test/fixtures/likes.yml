@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  profile: one
+  like_type: 1
+  likeable: one
+  likeable_type: Likeable
+
+two:
+  profile: two
+  like_type: 1
+  likeable: two
+  likeable_type: Likeable

@@ -4,9 +4,11 @@ Rails.application.routes.draw do
     get '/users/sign_out' => 'devise/sessions#destroy'     
  end
   resources :posts do
-    resources :comments
+    resources :likes, only: [:create, :destroy], defaults: { likeable: 'post' }
+    resources :comments do
+    resources :likes, only: [:create, :destroy], defaults: { likeable: 'comment' }
     end
-
+  end
   resources :profiles do
     resource :followers
     resources :posts

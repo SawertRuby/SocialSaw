@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_08_190712) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_10_203211) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_08_190712) do
     t.integer "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["profile_id"], name: "index_comments_on_profile_id"
   end
@@ -57,6 +58,18 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_08_190712) do
     t.index ["followed_id"], name: "index_followers_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_followers_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_followers_on_follower_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "profile_id", null: false
+    t.integer "like_type"
+    t.string "likeable_type", null: false
+    t.integer "likeable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["profile_id", "likeable_type", "likeable_id"], name: "index_likes_on_profile_and_likeable", unique: true
+    t.index ["profile_id"], name: "index_likes_on_profile_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -94,6 +107,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_08_190712) do
   add_foreign_key "comments", "profiles"
   add_foreign_key "followers", "profiles", column: "followed_id"
   add_foreign_key "followers", "profiles", column: "follower_id"
+  add_foreign_key "likes", "profiles"
   add_foreign_key "posts", "profiles"
   add_foreign_key "profiles", "users"
 end

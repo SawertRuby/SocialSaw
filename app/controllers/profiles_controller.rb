@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
     before_action :authenticate_user!
   before_action :set_profile, only: [:edit, :update]
-
+before_action :authorize_user!, only: [:edit, :update]
   def new
     @profile = current_user.build_profile
   end
@@ -28,7 +28,7 @@ class ProfilesController < ApplicationController
 
   def update
     if @profile.update(profile_params)
-      redirect_to root_path, notice: 'Профиль успешно обновлен.'
+      redirect_to profile_path(@profile), notice: 'Профиль успешно обновлен.'
     else
       render :edit
     end
@@ -48,5 +48,11 @@ class ProfilesController < ApplicationController
     @profile = current_user.profile
     @posts = @profile.posts
     render :show
+  end
+
+  def authorize_user!
+    unless @profile == current_user.profile
+      redirect_to @profile, alert: 'You are not authorized to edit this post.'
+    end
   end
 end

@@ -29,14 +29,40 @@
 
 <h2>Посты</h2>
 <% @posts.each do |post| %>
+<% if post.profile.user == current_user %>
+  <%= link_to 'Изменить пост', edit_post_path(post) %>
+<% end %>
   <div class="post">
   <%= link_to @profile.username, post %>
-    <h3><%= post.description %></h3>
-    <% if post.images.attached? %>
-      <% post.images.each do |image| %>
-        <%= image_tag image %>
-      <% end %>
+  <h3><%= post.description %></h3>
+  <% if post.images.attached? %>
+    <% post.images.each do |image| %>
+      <%= image_tag image %>
     <% end %>
+  <% end %>
   </div>
+  <% like = post.like.find_by(profile: current_user.profile) %>
+
+<div class="like-buttons">
+  <!-- Кнопка для лайка -->
+  <%= form_with(url: post_likes_path(post), method: :post, local: true) do |form| %>
+    <%= hidden_field_tag :likeable_id, post.id %>
+    <%= hidden_field_tag :likeable_type, 'Post' %>
+    <%= hidden_field_tag :like_type, 1 %> <!-- Устанавливаем лайк -->
+
+    <%= form.submit '👍🏻', class: like.present? && like.like_type == 1 ? 'active-like' : 'inactive-like' %>
+    <span><%= post.like.where(like_type: 1).count %></span> <!-- Подсчет лайков -->
+  <% end %>
+
+  <!-- Кнопка для дизлайка -->
+  <%= form_with(url: post_likes_path(post), method: :post, local: true) do |form| %>
+    <%= hidden_field_tag :likeable_id, post.id %>
+    <%= hidden_field_tag :likeable_type, 'Post' %>
+    <%= hidden_field_tag :like_type, -1 %> <!-- Устанавливаем дизлайк -->
+
+    <%= form.submit '👎🏻', class: like.present? && like.like_type == -1 ? 'active-dislike' : 'inactive-dislike' %>
+    <span><%= post.like.where(like_type: -1).count %></span> <!-- Подсчет дизлайков -->
+  <% end %>
+</div>
 <% end %>
 
