@@ -6,7 +6,7 @@ class PostsController < ApplicationController
         @posts = Post.all
       end
       def edit
-        set_post
+        
         # Отобразить форму для редактирования профиля
       end
     def show
@@ -31,7 +31,7 @@ class PostsController < ApplicationController
 
 
       def update
-        set_post
+         @post = Post.find(params[:id])
         if @post.update(post_params)
           redirect_to @post, notice: 'Post was successfully updated.'
         else
