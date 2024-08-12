@@ -2,38 +2,61 @@
 <h3><%= link_to @post.profile.username, profile_path(@post.profile) %></h3>
 <h1><%= @post.description %></h1>
 
-<% @post.images.each do |image| %>
-  <div>
-    <%= image_tag image %>
-  </div>
-<% end %>
+<div id="carouselExample" class="carousel slide ">
+    <div class="carousel-inner">
+
+
+
+        <% @post.images.each_with_index do |image, i | %>
+        <% if i ==0 %>
+          <div class="carousel-item active">
+        <%else%>
+        <div class="carousel-item">
+        <% end %>
+          <%= image_tag image ,class:"d-block w-100"%>
+          </div>
+        <% end %>
+   
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+    </div>
+
 <% if @post.profile.user == current_user %>
-  <%= link_to 'Изменить пост', edit_post_path(@post) %>
+  <%= link_to 'Изменить пост', edit_post_path(@post), class: "btn btn-warning "%>
 <% end %>
 
 
 
 <% like = @post.like.find_by(profile: current_user.profile) %>
 
-<div class="like-buttons">
-  <!-- Кнопка для лайка -->
+<div class="btn-group" role="group">
+  
   <%= form_with(url: post_likes_path(@post), method: :post, local: true) do |form| %>
     <%= hidden_field_tag :likeable_id, @post.id %>
     <%= hidden_field_tag :likeable_type, 'Post' %>
-    <%= hidden_field_tag :like_type, 1 %> <!-- Устанавливаем лайк -->
+    <%= hidden_field_tag :like_type, 1 %> 
 
-    <%= form.submit '👍🏻', class: like.present? && like.like_type == 1 ? 'active-like' : 'inactive-like' %>
-    <span><%= @post.like.where(like_type: 1).count %></span> <!-- Подсчет лайков -->
+    <%= form.submit '👍🏻', class: like.present? && like.like_type == 1 ? 'active-like btn btn-success'  : "inactive-like  btn btn-outline-success" %>
+    <span><%= @post.like.where(like_type: 1).count %></span> 
   <% end %>
 
-  <!-- Кнопка для дизлайка -->
+ 
   <%= form_with(url: post_likes_path(@post), method: :post, local: true) do |form| %>
     <%= hidden_field_tag :likeable_id, @post.id %>
     <%= hidden_field_tag :likeable_type, 'Post' %>
-    <%= hidden_field_tag :like_type, -1 %> <!-- Устанавливаем дизлайк -->
+    <%= hidden_field_tag :like_type, -1 %> 
 
-    <%= form.submit '👎🏻', class: like.present? && like.like_type == -1 ? 'active-dislike' : 'inactive-dislike' %>
-    <span><%= @post.like.where(like_type: -1).count %></span> <!-- Подсчет дизлайков -->
+    <%= form.submit '👎🏻', class: like.present? && like.like_type == -1 ? 'active-dislike btn btn-danger' : 'inactive-dislike btn btn-outline-danger' %>
+    <span><%= @post.like.where(like_type: -1).count %></span> 
   <% end %>
 </div>
 
@@ -44,30 +67,56 @@
 
 
 
-<% @comments.active.each do |comment| %>
-  <div>
+
+
+
+<% @comments.active.reverse.each_with_index do |comment,i_post| %>
+
+<div class="card">
+
+
+
+    <div class="card-body">
+  
     <% if comment.profile.present? %>
-      <%= link_to comment.profile.username, profile_path(comment.profile) %>
- <%= form_with(url: post_comment_path(@post, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }) do |form| %>
-  <%= form.submit 'Delete', class: 'delete-button' %>
-<% end %>
+      <%= link_to comment.profile.username, profile_path(comment.profile) , class: "card-title"%>
+  <%= form_with(url: post_comment_path(@post, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }) do |form| %>
+  <%= form.submit 'Delete', class: 'delete-button btn btn-sm btn-outline-danger' %>
+  <% end %>
 
 
     <% else %>
       <p>Аноним</p> 
     <% end %>
-  </div>
+ 
    <p><%= comment.title %></p> 
-  <% comment.images.each do |image| %>
-    <div>
-      <%= image_tag image %>
-    </div>
-  <% end %>
+    <div id="carouselExample<%=i_post%>" class="carousel slide ">
+    <div class="carousel-inner">
 
+  <% comment.images.each_with_index do |image, i | %>
+        <% if i ==0 %>
+          <div class="carousel-item active">
+        <%else%>
+        <div class="carousel-item">
+        <% end %>
+          <%= image_tag image ,class:"d-block w-100"%>
+          </div>
+        <% end %>
+   
+      </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample<%=i_post%>" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample<%=i_post%>" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+</div>
 
 <% end %>
-
-
 
 <%= form_with(model: [@post, @comment], local: true) do |form| %>
   <% if @comment.errors.any? %>
@@ -92,6 +141,10 @@
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Отправить" ,class:"btn btn-primary"%>
   </div>
+
+
+
 <% end %>
+

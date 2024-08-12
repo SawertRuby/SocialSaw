@@ -62,8 +62,8 @@ gem "cssbundling-rails", "~> 1.4"
 
 gem "jsbundling-rails", "~> 1.3"
 
-gem 'bootstrap', '~> 5.3.3'
-
 gem 'jquery-rails'
+
+gem 'bootstrap', '~> 5.3.3'
 
 gem 'sassc-rails'

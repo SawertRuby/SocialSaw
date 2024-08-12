@@ -1,12 +1,15 @@
+<div class="card">
 <h1><%= @profile.username%></h1>
 <h4><%= @profile.user.email %></h4>
 <% if @profile.avatar.attached? %>
-    <%= image_tag(@profile.avatar) %>
+    <%= image_tag(@profile.avatar, class:"img-thumbnail border border-danger")%>
     
   <% else %>
     <span>Нет аватара</span>
   <% end %>
+<h4><%= @profile.description%></h4>
 
+</div>
 <% if @profile.user == current_user %>
   <%= link_to 'Изменить профиль', edit_profile_path(@profile) %>
 <% end %>
@@ -28,30 +31,60 @@
 <% end %>
 
 
-<h2>Посты</h2>
-<% @posts.each do |post| %>
-<% if post.profile.user == current_user %>
-  <%= link_to 'Изменить пост', edit_post_path(post) %>
-<% end %>
-  <div class="post">
-  <%= link_to @profile.username, post %>
-  <h3><%= post.description %></h3>
-  <% if post.images.attached? %>
-    <% post.images.each do |image| %>
-      <%= image_tag image %>
-    <% end %>
-  <% end %>
+<% @posts.reverse.each_with_index do |post, i_post| %>
+
+
+
+
+<div class="card">
+
+
+
+<div class="card-body">
+  <div>
+ 
+   <%= link_to post.profile.username, profile_path(post.profile), class: "btn btn-primary" %>
+    <h3 class="card-title"><%= link_to post.description, post %></h3>
+    
+    <div id="carouselExample<%=i_post%>" class="carousel slide ">
+    <div class="carousel-inner">
+
+
+
+        <% post.images.each_with_index do |image, i | %>
+        <% if i ==0 %>
+          <div class="carousel-item active">
+        <%else%>
+        <div class="carousel-item">
+        <% end %>
+          <%= image_tag image ,class:"d-block w-100"%>
+          </div>
+        <% end %>
+   
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample<%=i_post%>" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample<%=i_post%>" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+
+    </div>
+
   </div>
   <% like = post.like.find_by(profile: current_user.profile) %>
 
-<div class="like-buttons">
+<div class="btn-group" role="group">
   <!-- Кнопка для лайка -->
   <%= form_with(url: post_likes_path(post), method: :post, local: true) do |form| %>
     <%= hidden_field_tag :likeable_id, post.id %>
     <%= hidden_field_tag :likeable_type, 'Post' %>
     <%= hidden_field_tag :like_type, 1 %> <!-- Устанавливаем лайк -->
 
-    <%= form.submit '👍🏻', class: like.present? && like.like_type == 1 ? 'active-like' : 'inactive-like' %>
+    <%= form.submit '👍🏻', class: like.present? && like.like_type == 1 ? 'active-like btn btn-success'  : "inactive-like  btn btn-outline-success" %>
     <span><%= post.like.where(like_type: 1).count %></span> <!-- Подсчет лайков -->
   <% end %>
 
@@ -61,9 +94,11 @@
     <%= hidden_field_tag :likeable_type, 'Post' %>
     <%= hidden_field_tag :like_type, -1 %> <!-- Устанавливаем дизлайк -->
 
-    <%= form.submit '👎🏻', class: like.present? && like.like_type == -1 ? 'active-dislike' : 'inactive-dislike' %>
+    <%= form.submit '👎🏻', class: like.present? && like.like_type == -1 ? 'active-dislike btn btn-danger' : 'inactive-dislike btn btn-outline-danger'%>
     <span><%= post.like.where(like_type: -1).count %></span> <!-- Подсчет дизлайков -->
   <% end %>
 </div>
+</div>
+  <%= link_to 'Изменить пост', edit_post_path(post) %>
+</div>
 <% end %>
-

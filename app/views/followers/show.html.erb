@@ -3,12 +3,12 @@
 `   `
 
 <h2>Подписчики</h2>
-<ul>
+<ul class="list-group">
     <% if @profile.followers.count == 0 %>
         <p>Нет подписчиков</p>
     <%else%>
         <% @profile.followers.each do |follower| %>
-            <li><%= link_to follower.username, follower %></li>
+            <li class="list-group-item" ><%= link_to follower.username, follower %></li>
         <% end %>
     <% end %>
 </ul>
@@ -19,9 +19,9 @@
 <% else %>
     <ul>
         <% @profile.following.each do |followed| %>
-            <li><%= link_to followed.username, followed %></li>
+            <li class="list-group-item"><%= link_to followed.username, followed ,class: "btn btn-primary"%></li>
             <% if user_signed_in? %>
-                <%= button_to 'Unfollow', profile_followers_path(followed), method: :delete, class: 'btn btn-secondary' %>
+                <%= button_to 'Отписаться', profile_followers_path(@profile), method: :delete, class: 'btn btn-secondary' %>
             <% end %>
 
         <% end %>

@@ -1,4 +1,4 @@
-<%= form_for(@post, url: post_path(@post.profile), method: :patch) do |form| %>
+<%= form_for(@post, url: post_path(@post), method: :patch) do |form| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
@@ -9,18 +9,22 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
+  <div class="container">
+  <div class="field ">
     <%= form.label :description %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description , class: "form-floating"%>
   </div>
 
   <div class="field">
     <%= form.label :images %>
-    <%= form.file_field :images, multiple: true %>
+    <%= form.file_field :images , multiple: true, class: "input-group-text" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Обновить", class:"btn btn-primary" %>
   </div>
+
+</div>
+
+
 <% end %>

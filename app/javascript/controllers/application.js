@@ -6,6 +6,9 @@ const application = Application.start()
 application.debug = false
 window.Stimulus   = application
 
-
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('JavaScript работает!');
+  });
+  
 
 export { application }
