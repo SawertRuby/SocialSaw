@@ -7,4 +7,7 @@ import * as bootstrap from "bootstrap"
 //= require rails-ujs
 //= require turbolinks
 //= require bootstrap
-//= require_tree .
+//= require_tree
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets

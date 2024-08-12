@@ -1,7 +1,7 @@
 class Profile < ApplicationRecord
     belongs_to :user
     validates :username, uniqueness: true, on: :create
-    has_one_attached :avatar 
+    has_one_attached :avatar
     has_many :post
      
     has_many :followed_relationships, class_name: 'Follower', foreign_key: 'follower_id'
