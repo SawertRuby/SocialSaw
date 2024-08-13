@@ -16,6 +16,12 @@ Rails.application.routes.draw do
       get 'my_posts'
     end
   end
+  resources :subscriptions do
+    resources :likes, only: [:create, :destroy], defaults: { likeable: 'post' }
+    resources :comments do
+    resources :likes, only: [:create, :destroy], defaults: { likeable: 'comment' }
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
