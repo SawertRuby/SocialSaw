@@ -12,12 +12,19 @@
       </li>
       <% if user_signed_in? %>
        <% if current_user.profile %>
+        <li class="nav-item">
+          <%= link_to 'Подписки',  subscription_path(current_user.profile), class: 'nav-link' %>
+        </li> 
       <li class="nav-item">
-          <%= link_to 'Профиль', profile_path(current_user.profile), class: 'nav-link' %>
+      
+          <%= link_to 'Профиль', profile_path(current_user.profile), class: 'nav-link bi bi-person-circle' %>
+          
         </li>
+        
         <li class="nav-item">
           <%= link_to 'Создать пост', new_post_path, class: 'nav-link' %>
-        </li> 
+        </li>
+       
        <% else%>
          <li class="nav-item">
         <%= link_to 'Создать профиль', new_profile_path,  class: 'nav-link'%>
