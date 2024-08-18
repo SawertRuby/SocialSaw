@@ -52,7 +52,7 @@ before_action :authorize_user!, only: [:edit, :update]
 
   def authorize_user!
     unless @profile == current_user.profile
-      redirect_to @profile, alert: 'You are not authorized to edit this post.'
+      redirect_to @profile, alert: 'You are not authorized to edit this profile.'
     end
   end
 end

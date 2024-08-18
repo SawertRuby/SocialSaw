@@ -67,3 +67,5 @@ gem 'jquery-rails'
 gem 'bootstrap', '~> 5.3.3'
 
 gem 'sassc-rails'
+
+gem "rails-controller-testing"

@@ -1,7 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  description: MyText
+  description: "First post"
+  profile: one
 
 two:
-  description: MyText
+  description: "Second post"
+  profile: two
+

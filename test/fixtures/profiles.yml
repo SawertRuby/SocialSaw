@@ -1,9 +1,12 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  username: MyString
-  description: MyText
+  username: "user1profile"
+  user: one
 
 two:
-  username: MyString
-  description: MyText
+  username: "user2profile"
+  user: two
+three:
+  username: "user3profile"
+  user: three

@@ -1,7 +1,6 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  #gem device. Tests include in github repository https://github.com/heartcombo/devise/tree/main/test/
+
 end
